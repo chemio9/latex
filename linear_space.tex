@@ -1,0 +1,141 @@
+\documentclass[UTF8]{ctexart}
+\usepackage{times}
+\usepackage{siunitx}
+\usepackage{amsmath,amssymb}
+\usepackage{xcolor}
+\usepackage{microtype}
+
+\usepackage{hyperref}
+\hypersetup{
+    hidelinks,
+    colorlinks = false
+}
+\usepackage{tikz}
+\usepackage{tikz-3dplot}
+\usetikzlibrary{patterns}
+\usetikzlibrary{positioning} % for relative positions
+\usetikzlibrary{3d,calc}
+
+\title{[Title]}
+\date{\today}
+\author{Clarence}
+
+\newcommand{\env}[2]{\begin{#1}#2\end{#1}}
+
+\usepackage{amsthm}
+\theoremstyle{definition}
+\newtheorem{definition}{Definition}[section]
+
+\begin{document}
+
+\maketitle
+\newpage
+\tableofcontents
+
+\section{Preamble}
+\begin{definition}[Kronecker delta]
+  \[
+    \delta ^\mu_v = \delta_{\mu v} = \delta^{\mu v} =
+    \begin{cases}
+    1, & \text{if $ \mu = v $} \\
+    0, & \text{if $ \mu \neq v $}
+    \end{cases}
+  .\]
+\end{definition}
+
+\section{线性空间}
+
+\begin{definition}[线性空间]
+  给定数域$ P $ ($ \mathbb{R} $ 或 $ \mathbb{C} $),线性空间 $ V $ 就是对元素（矢量/向量）定义了\textbf{矢量加法} $ V \boxplus V \to V $ 与 \textbf{矢量数乘} $ V \boxtimes V \to V $ 的集合.
+  矢量加法与矢量乘法满足8条公理:
+    $ \forall u, v, w \in V, \forall p, p' \in P $ 有
+  \begin{itemize}
+    \item $ u\boxplus v = v \boxplus u $
+    \item $ u \boxplus (v \boxplus w ) = (u \boxplus v) \boxplus w$
+    \item 存在零元， 即矢量加法单位元 $ o \in V $, 使得 $ v \boxplus o = v $
+    \item 存在矢量加法逆元 $ -v \in V $ 使得 $ -v \boxplus v = o $
+    \item 存在数乘单位元 $ 1 $ 使得 $ 1 \boxtimes v = v $
+    \item 数乘与数域乘法相容:
+      $ (p p')\boxtimes v = p \boxtimes (p' \boxtimes v) $
+    \item 数乘对数域加法的分配律:
+      $ p \boxtimes ( u \boxplus v)= p \boxtimes u \boxplus p \boxtimes v $
+    \item 数乘对矢量加法分配率:
+      $ (p+p') \boxtimes v = p \boxtimes v \boxplus p' \boxtimes v $
+  \end{itemize}
+  考虑到矢量加法数乘与数域加法, 乘法相容, 可以不引入新的符号, 使用$ u + v $ 与 $ pv $ 代替$ u \boxplus v $ 与 $ p \boxtimes v $而不会引起任何混乱.
+\end{definition}
+这样的线性空间是构建向量,张量等概念的基础. 注意此时并没有欧几里得空间长度,内积,正交等的概念.
+
+$ V $ 中 $ n $ 个矢量 $ u,v\ldots w  $ 存在不全为$ 0 $的一组数$ p_{1},p_{2}\ldots p_{n} $ ,使得$ p_{1}u + p_{2} v +\ldots + p_n w =0 $ 称这些矢量是\textbf{线性相关}的, 反之称为\textbf{线性无关}的.
+线性空间 $ V $ 的维度定义为线性空间内能找到线性无关矢量的最大值,记为$ \dim V $
+
+\begin{definition}[基矢]
+  线性空间$ V $ 中, 找到 $ n = \dim V $ 个线性无关矢量$ \{e_{1},e_{2},\ldots e_n\} $, 称之为基矢或基底, 使得$ V $ 中任何一个矢量都可以展开为基矢的线性组合
+\[
+  v = \sum_{\mu =1}^{n} v^\mu e_\mu
+\]
+\end{definition}
+其中系数 $ v^\mu \in P $ 叫做$ v $ 的分量(或坐标), 人为规定矢量分量用上标,基矢编号用下标表示. $ V $ 中这组基的选取是任意的.
+
+\begin{definition}[对偶线性空间]
+  对于线性空间$ V $, 将其对偶线性空间记作$ V^* $, 那么 $ \forall \varphi \in V^* $ 都是$ V \to P $ 的线性映射, 即
+  \[
+    V^* \equiv \{ \varphi : V \xrightarrow{\text{linear}} P \}
+  \]
+\end{definition}
+
+线性映射,即对于$ \forall u, v \in V ; \forall p \in P ; \forall \varphi \in V^* $ 有
+\begin{align}
+  \varphi (\mu + v) &= \varphi (\mu) + \varphi (v) \\
+  \varphi (pv) &= p\varphi(v)
+\end{align}
+
+$ V^* $ 中的加法与数乘定义为 $ \forall v \in V; \forall \varphi, \omega \in V^*; \forall p \in P $
+\begin{align}
+  \mu = \varphi + \omega \iff \mu(v) = \varphi(v)+\omega(v) \\
+  \mu = p\varphi \iff \mu(v) =p \varphi(v)
+\end{align}
+
+$ V^* $ 中的元素被称为对偶矢量/余向量/1-形式/(协变矢量).
+
+\[
+  \dim V = \dim V^* \text{(二者同构)}
+\]
+给定一组基$ \{e_{1},e_{2}\ldots e_n\} \subset V $ , 相应能找到一组对偶矢量$ \{e^{*1},e^{*2}\ldots e^{*n} \} \subset V^* $, 其定义为 $ e^{*\mu}(v) \equiv v^\mu $, 即取出$ v $ 在这组基下的第$ \mu $ 个分量.
+等价地, $ e^{*\mu}(e_v) = \delta^\mu_v $
+那么这$ n $ 个矢量构成$ V^* $ 中的一组基矢,称为\textbf{对偶基矢}
+
+\begin{proof}
+  首先对于对偶矢量$ \varphi \in V^* $, 令 $ \varphi_\mu = \varphi (e_\mu) $, 那么不难证明: $ \varphi $ 按照对偶基矢展开的分量是$ \varphi_\mu $ ,即
+  \[
+  \varphi = \sum_{\mu = 1}^{n} \varphi_\mu e^{*\mu}
+  .\]
+  上式同时作用于$ v \in V $,
+
+  \begin{equation}
+  \begin{aligned}
+    \varphi(v)&=\varphi(\sum_{\mu =1}^{n} v_\mu e_\mu ) \\
+     &= \sum_{\mu =1}^{n} v_\mu \varphi(e_\mu ) \\
+     &=  \sum_{\mu =1}^{n} v_\mu \varphi_\mu
+  \end{aligned}
+  \end{equation}
+  \begin{equation}
+  \begin{aligned}
+    (\sum_{\mu =1}^{n} \varphi_\mu e^{*\mu })(v) &= \sum_{\mu =1}^{n} \varphi_\mu e^{*\mu }(v) \\
+     &=  \sum_{\mu =1}^{n} v_\mu \varphi_\mu
+  \end{aligned}
+  \end{equation}
+  左边 $=$ 右边
+\end{proof}
+人为规定对偶矢量分量用下指标表示, 对偶基矢用上指标表示.
+同时由上述证明可知
+\begin{equation}
+  v(\varphi) \equiv \varphi(v) = \varphi \cdot v   \label{phi.v}
+\end{equation}
+式 \eqref{phi.v} 有时也记作 $  \left \langle \varphi, v  \right \rangle $
+同时也可以看出 $ V $  和 $ V^* $ 的地位是对称的, 它们互为对偶空间. 换个说法, $ V $和 $ V^{**} $ 之间存在自然同构映射.
+$ V^* $ 作为线性空间, 其对偶空间 $ V^{**} $  , 其中元素是$ V^* \to P $  的线性映射. 而 $ V $ 中的元素$ v \in V $  也可作为 $ V^* \to P $ 的线性映射. 因此 $ V $ 中的元素可以对应到 $ V^{* *} $ 中的元素. 亦即$ V $和 $ V^{**} $ 之间存在自然同构映射. 我们没有必要区分 $ V $ 和 $ V^{* *} $
+
+但是虽然$ V $ 和 $ V^{*} $ 虽然也同构($ \dim V = \dim V^* $ ) 但是$ V $中没有给定其他结构之前, $ V $ 与$ V^* $ 之间不存在这样的自然同构映射,有必要区分  $ V $ 和 $ V^{*} $.
+我们可能习惯于向量内积 $ \vec{u}  \cdot \vec{v}  = u_i v_i $, 但存在这个运算是因为欧几里得空间的度规保证了 $ g_j g_i = 0 $, 我们才可以直接将坐标分量相乘.
+\end{document}
