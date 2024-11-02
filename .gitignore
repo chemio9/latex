@@ -307,3 +307,4 @@ TSWLatexianTemp*
 
 # ignore generated pdf
 *.pdf
+!pics/*.pdf
