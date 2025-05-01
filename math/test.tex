@@ -1,0 +1,17 @@
+\documentclass{ctexart}
+\usepackage{cleveref}
+
+% 修改引用文字
+\crefname{enumi}{项目}{项目}
+\Crefname{enumi}{项目}{项目}
+
+\begin{document}
+
+\begin{enumerate}
+	\item \label{item.1} 这是第一个项目
+	\item \label{item.2} 这是第二个项目
+\end{enumerate}
+
+\Cref{item.1} 和 \cref{item.2} 是示例项目。
+
+\end{document}
