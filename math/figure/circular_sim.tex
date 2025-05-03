@@ -1,0 +1,100 @@
+\documentclass[12pt,tikz]{standalone}
+\usepackage{xcolor}
+\usepackage{tikz}
+\usepackage{tikz-3dplot}
+
+\begin{document}
+\pgfmathsetmacro\th{65}
+\pgfmathsetmacro\az{110}
+\tdplotsetmaincoords{\th}{\az}
+%parameters of the cone
+\begin{tikzpicture}[scale=1, tdplot_main_coords, axis/.style={blue,thick}]
+	\pgfmathsetmacro\R{2} %radius of base
+	\pgfmathsetmacro\v{5} %height of cone
+	\pgfmathsetmacro\M{3}
+	\path (0,0,0) coordinate (O)
+	(0,0,\M) coordinate (M)
+	(0,0,\v) coordinate (P);
+	\foreach \point/\pos in {P/above, O/below, M/left}
+		{\fill (\point) circle[radius=1pt] node[\pos] {$\point$};}
+	\draw[dashed] (P) -- (O);
+
+	\pgfmathsetmacro\RM{\R - \M*\R/\v}
+
+	% \draw[thick,->] (0,0,0) -- (1,0,0) node[anchor=north east]{$x$};
+	% \draw[thick,->] (0,0,0) -- (0,1,0) node[anchor=north west]{$y$};
+	% \draw[thick,->] (0,0,0) -- (0,0,1) node[anchor=south]{$z$};
+
+	\pgfmathsetmacro\cott{{cot(\th)}}
+	\pgfmathsetmacro\fraction{\R*\cott/\v}
+	\pgfmathsetmacro\fraction{\fraction<1 ? \fraction : 1}
+	\pgfmathsetmacro\angle{{acos(\fraction)}}
+
+	% % angles for transformed lines
+	\pgfmathsetmacro\PhiOne{180+(\az-90)+\angle}
+	\pgfmathsetmacro\PhiTwo{180+(\az-90)-\angle}
+
+	% % coordinates for transformed surface lines
+	\pgfmathsetmacro\sinPhiOne{{sin(\PhiOne)}}
+	\pgfmathsetmacro\cosPhiOne{{cos(\PhiOne)}}
+	\pgfmathsetmacro\sinPhiTwo{{sin(\PhiTwo)}}
+	\pgfmathsetmacro\cosPhiTwo{{cos(\PhiTwo)}}
+
+	\tdplotdrawarc[tdplot_main_coords,dashed]{(O)}{\R}{\PhiTwo}{\PhiOne}{anchor=north}{}
+	\tdplotdrawarc[tdplot_main_coords,thick]{(O)}{\R}{\PhiOne}{360+\PhiTwo}{anchor=north}{}
+
+	\tdplotdrawarc[tdplot_main_coords,dashed]{(M)}{\RM}{\PhiTwo}{\PhiOne}{anchor=north}{}
+	\tdplotdrawarc[tdplot_main_coords,thick]{(M)}{\RM}{\PhiOne}{360+\PhiTwo}{anchor=north}{}
+
+	% % displaying transformed surface of the cone (rotated)
+	\draw[thick] (0,0,\v) -- (\R*\cosPhiOne,\R*\sinPhiOne,0);
+	\draw[thick] (0,0,\v) -- (\R*\cosPhiTwo,\R*\sinPhiTwo,0);
+	\pgfmathsetmacro\N{1}
+
+	\foreach \X [remember=\X as \LastX (initially 0)] in {0, \N,...,\v}
+		{
+			\path (0,0,\X) coordinate (X);
+			\path (0,0,\LastX) coordinate (L);
+			\pgfmathsetmacro\RX{\R - \X*\R/\v}
+			\pgfmathsetmacro\RLX{\R - \LastX*\R/\v}
+
+			\tdplotdrawarc[tdplot_main_coords]{(X)}{\RX}{\PhiOne}{360+\PhiTwo}{anchor=north}{};
+			\tdplotdrawarc[tdplot_main_coords]{(L)}{\RX}{\PhiOne}{360+\PhiTwo}{anchor=north}{};
+
+			\tdplotdrawarc[tdplot_main_coords,dashed]{(X)}{\RX}{\PhiTwo}{\PhiOne}{anchor=north}{}
+
+			\pgfcoordinate{edge1_top}{ \pgfpointcylindrical{\az}{\RX}{\X} };
+			\pgfcoordinate{edge1_bottom}{ \pgfpointcylindrical{\az}{\RX}{\LastX} };
+			\draw(edge1_top) -- (edge1_bottom);
+
+			\pgfcoordinate{edge2_top}{ \pgfpointcylindrical{\az+180}{\RX}{\X} };
+			\pgfcoordinate{edge2_bottom}{ \pgfpointcylindrical{\az+180}{\RX}{\LastX} };
+			\draw (edge2_top) -- (edge2_bottom);
+
+			\ifnum\X=3
+				\pgfcoordinate{dxtop}{ \pgfpointcylindrical{\az+180}{\RX+0.5}{\X} };
+				\pgfcoordinate{dxbot}{ \pgfpointcylindrical{\az+180}{\RX+0.5}{\LastX} };
+				\draw[dashed] (dxtop)--(edge2_top)
+				(dxbot) -- (edge2_bottom);
+				\draw[<->] (dxtop)--(dxbot) node[anchor=east,midway, xshift=-5pt]  {$\mathrm{d}x$};
+			\else
+				\draw (edge2_top) -- (edge2_bottom);
+			\fi
+
+			% \ifnum\X=0
+			% 	\draw (\LastX/\N,3pt) -- (\LastX/\N,0pt) coordinate (x\X)
+			% 	node[anchor=north east,xshift=2pt,lnode]  {$a=x_{\X}$};
+			% \else
+			% 	\pgfmathtruncatemacro{\itest}{mod(\X,\M)}
+			% 	\ifnum\itest=0
+			% 		\pgfmathsetmacro{\dist}{1-\LastX/\N}
+			% 		\ifdim\dist cm>9pt
+			% 			\draw (\LastX/\N,3pt) -- (\LastX/\N,0pt)
+			% 			node[anchor=north,lnode] {$x_{\X}$};
+			% 		\fi
+			% 	\fi
+			% \fi
+		}
+
+\end{tikzpicture}
+\end{document}

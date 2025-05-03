@@ -1,0 +1,40 @@
+\documentclass[border=3pt,tikz]{standalone}
+\usepackage{tikz}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{ctex}
+\usetikzlibrary{matrix, calc, positioning}
+\begin{document}
+\newcommand*{\N}{6}
+\begin{tikzpicture}[scale=1.2,declare function={f(\x)=((0.12)*(\x)^(3)-0.93*(\x)^(2)+1.6*\x+2.3;},
+		lnode/.style={fill=white,font=\normalsize,inner sep=0pt,text height=1.5em}]
+	\pgfmathtruncatemacro{\M}{\N/4}
+	\coordinate (start) at (.8,{f(.8)});
+	\foreach \X [remember=\X as \LastX (initially 0)] in {1,...,\N}
+	{\draw[fill=orange!40!white] (1+\LastX*4/\N,0) rectangle (1+\X*4/\N,{f(1+\LastX*4/\N)});
+	% \draw[red,fill=red] (1+\LastX*4/\N,{f(1+\LastX*4/\N)}) circle (2pt) ;
+	\path  (1+\LastX*4/\N,0pt) coordinate (x\X);
+	\ifnum\X=1
+		\draw (1+\LastX*4/\N,3pt) -- (1+\LastX*4/\N,0pt) coordinate (x\X)
+		node[anchor=north east,xshift=2pt,lnode]  {$a=x_{\X}$};
+	\else
+		\pgfmathtruncatemacro{\itest}{mod(\X,\M)}
+		\ifnum\itest=0
+			\pgfmathsetmacro{\dist}{4-\LastX*4/\N}
+			\ifdim\dist cm>5pt
+				\draw (1+\LastX*4/\N,3pt) -- (1+\LastX*4/\N,0pt)
+				node[anchor=north,lnode] {$x_{\X}$};
+			\fi
+		\fi
+	\fi
+	}
+	\coordinate (end) at (5.05,{f(5.05)});
+	\draw (5,3pt) -- (5,0pt)
+	node[anchor=north west,xshift=-2pt,lnode]{$b=x_n$};
+	\draw (5,0)--(5,{f(5)});
+	\draw [-latex] (-0.5,0) -- (6,0) node (xaxis) [below] {$x$};
+	\draw [-latex] (0,-0.5) -- (0,5) node [left] {$y$};
+	\draw[domain=0.5:5.2,samples=200,variable=\x,red,-,thick] plot ({\x},{f(\x)});
+	\draw[<->] (x2|- 0,-1)--(x3|- 0,-1) node[above,midway] {$\Delta x$};
+\end{tikzpicture}
+\end{document}

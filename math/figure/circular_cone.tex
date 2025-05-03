@@ -1,0 +1,49 @@
+\documentclass[12pt,tikz]{standalone}
+\usepackage{xcolor}
+\usepackage{tikz}
+\usepackage{tikz-3dplot}
+
+\begin{document}
+\pgfmathsetmacro\th{65}
+\pgfmathsetmacro\az{110}
+\tdplotsetmaincoords{\th}{\az}
+%parameters of the cone
+\begin{tikzpicture}[scale=1, tdplot_main_coords, axis/.style={blue,thick}]
+	\pgfmathsetmacro\R{2} %radius of base
+	\pgfmathsetmacro\v{5} %height of cone
+	\pgfmathsetmacro\M{3}
+	\path (0,0,0) coordinate (O)
+	(0,0,\M) coordinate (M)
+	(0,0,\v) coordinate (P);
+	\foreach \point/\pos in {P/above, O/below, M/left}
+		{\fill (\point) circle[radius=1pt] node[\pos] {$\point$};}
+	\draw[dashed] (P) -- (O);
+
+	\pgfmathsetmacro\RM{\R - \M*\R/\v}
+
+	\pgfmathsetmacro\cott{{cot(\th)}}
+	\pgfmathsetmacro\fraction{\R*\cott/\v}
+	\pgfmathsetmacro\fraction{\fraction<1 ? \fraction : 1}
+	\pgfmathsetmacro\angle{{acos(\fraction)}}
+
+	% % angles for transformed lines
+	\pgfmathsetmacro\PhiOne{180+(\az-90)+\angle}
+	\pgfmathsetmacro\PhiTwo{180+(\az-90)-\angle}
+
+	% % coordinates for transformed surface lines
+	\pgfmathsetmacro\sinPhiOne{{sin(\PhiOne)}}
+	\pgfmathsetmacro\cosPhiOne{{cos(\PhiOne)}}
+	\pgfmathsetmacro\sinPhiTwo{{sin(\PhiTwo)}}
+	\pgfmathsetmacro\cosPhiTwo{{cos(\PhiTwo)}}
+
+	\tdplotdrawarc[tdplot_main_coords,dashed]{(O)}{\R}{\PhiTwo}{\PhiOne}{anchor=north}{}
+	\tdplotdrawarc[tdplot_main_coords,thick]{(O)}{\R}{\PhiOne}{360+\PhiTwo}{anchor=north}{}
+
+	\tdplotdrawarc[tdplot_main_coords,dashed]{(M)}{\RM}{\PhiTwo}{\PhiOne}{anchor=north}{}
+	\tdplotdrawarc[tdplot_main_coords,thick]{(M)}{\RM}{\PhiOne}{360+\PhiTwo}{anchor=north}{}
+
+	% % displaying transformed surface of the cone (rotated)
+	\draw[thick] (0,0,\v) -- (\R*\cosPhiOne,\R*\sinPhiOne,0);
+	\draw[thick] (0,0,\v) -- (\R*\cosPhiTwo,\R*\sinPhiTwo,0);
+\end{tikzpicture}
+\end{document}
