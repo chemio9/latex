@@ -1,15 +1,4 @@
-\documentclass[UTF8]{mathrep}
-
-\newcommand*{\dif}{\mathop{}\!\mathrm{d}}
-
-\title{初探微积分}
-\date{\today}
-\author{雅思数论}
-
-\begin{document}
-
-\maketitle
-\tableofcontents
+\chapter{初探微积分}
 
 \section{高等数学之门---抛物线下的面积与微积分}
 
@@ -21,7 +10,7 @@
 \end{figure}
 
 如\cref{fig:square}, 对于这样的抛物线, 大家最熟悉不过了, 但如图所示的阴影面积怎么求呢？
-自古希腊人发现抛线以后, 这个问题长时间困扰着数学家们.
+自古希腊人发现抛物线以后, 这个问题长时间困扰着数学家们.
 直到微积分的发明才使这个问题有了系统的解法.
 
 先看不用微积分的解法:
@@ -87,7 +76,7 @@
 \begin{enumerate}
 
   \item \label{law1} 若 $\int f(x) \dif x = F(x)$, 则 $\int  f(x) \dif x
-    = F(x) + C$. $C = Const $(任意常数).
+    = F(x) + C$. $C = \mathrm{Constant} $(任意常数).
   \item $\int [f(x) \pm g(x)] \dif x = \int f(x) \dif x \pm \int g(x) \dif x$
   \item $\int \lambda f(x) \dif x = \lambda \int f(x) \dif x$,
     其中$\lambda $为任意常数.
@@ -397,5 +386,3 @@ f\left[\varphi (t)\right] \cdot \varphi '(t) \dif t$的形式,
   对于两点电荷之间的电场力同理.
 
 \end{example}
-
-\end{document}

@@ -7,14 +7,14 @@
 { \msg_redirect_name:nnn { fontspec } { no-script } { none } }
 \AtEndOfPackageFile* { xeCJK }
 {
-	\msg_redirect_name:nnn { xeCJK } { CJKfamily-redef } { none }
-	\defaultCJKfontfeatures
-	{
-		Script  = CJK,
-	}
+  \msg_redirect_name:nnn { xeCJK } { CJKfamily-redef } { none }
+  \defaultCJKfontfeatures
+  {
+    Script  = CJK,
+  }
 }
 
-\LoadClassWithOptions{ctexart}
+\LoadClassWithOptions{ctexbook}
 
 % \RequirePackage[
 %   a4paper,
@@ -51,11 +51,10 @@
 \RequirePackage{booktabs}
 \RequirePackage{xcolor}
 
-% disable hyperref temporarily, see https://github.com/CTeX-org/ctex-kit/issues/725
 \RequirePackage{hyperref}
 \hypersetup{
-	hidelinks,
-	colorlinks = false
+  hidelinks,
+  colorlinks = false
 }
 
 \RequirePackage{cleveref}
@@ -94,30 +93,31 @@
 \counterwithin{table}{section}
 % \newcommand{\env}[2]{\begin{#1}#2\end{#1}}
 
+\newcommand*{\dif}{\mathop{}\!\mathrm{d}}
 \newcommand\abs[1]{
-	\ensuremath{\left\lvert #1 \right\rvert}
+  \ensuremath{\left\lvert #1 \right\rvert}
 }
 
 \ExplSyntaxOn
 
-\int_new:N \l__examzh_symbols_vec_input_count_int
+\int_new:N \l__mathrep_symbols_vec_input_count_int
 
 \AtBeginDocument
 {
-	\RenewDocumentCommand { \vec } { m }
-	{ \__examzh_symbols_vec:n {#1} }
+  \RenewDocumentCommand { \vec } { m }
+  { \__mathrep_symbols_vec:n {#1} }
 }
-\cs_new:Npn \__examzh_symbols_vec:n #1
+\cs_new:Npn \__mathrep_symbols_vec:n #1
 {
-% 先检测 #1 有多少个字符
-\__examzh_symbols_vec_detect_number_of_input_str:n {#1}
-% 只有 1 个的：加粗，多于两个的加箭头
-\int_compare:nNnTF { \l__examzh_symbols_vec_input_count_int } = {1}
-{ \bm {#1} }
-{ \overrightarrow {#1} }
+  % 先检测 #1 有多少个字符
+  \__mathrep_symbols_vec_detect_number_of_input_str:n {#1}
+  % 只有 1 个的：加粗，多于两个的加箭头
+  \int_compare:nNnTF { \l__mathrep_symbols_vec_input_count_int } = {1}
+  { \bm {#1} }
+  { \overrightarrow {#1} }
 }
-\cs_new:Npn \__examzh_symbols_vec_detect_number_of_input_str:n #1
+\cs_new:Npn \__mathrep_symbols_vec_detect_number_of_input_str:n #1
 {
-	\int_set:Nn \l__examzh_symbols_vec_input_count_int
-	{ \str_count:n { #1 } }
+  \int_set:Nn \l__mathrep_symbols_vec_input_count_int
+  { \str_count:n { #1 } }
 }
