@@ -35,6 +35,7 @@
 \RequirePackage{graphicx}
 \RequirePackage{amsmath,amssymb}
 \RequirePackage{subcaption}
+\RequirePackage{wrapfig2}
 \RequirePackage{bm}
 \RequirePackage{amsthm}
 
