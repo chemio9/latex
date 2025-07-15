@@ -3,9 +3,8 @@
 \section{高等数学之门---抛物线下的面积与微积分}
 
 \begin{figure}
-  \begin{center}
-    \includegraphics{square}
-  \end{center}
+  \centering
+    \input{figure/square.tex}
   \caption{square}\label{fig:square}
 \end{figure}
 
@@ -33,9 +32,8 @@
 \end{proof}
 
 \begin{figure}
-  \begin{center}
-    \includegraphics{./square_rect.pdf}
-  \end{center}
+  \centering
+    \input{figure/square_rect.tex}
   \caption{矩形逼近} \label{fig:rect}
 \end{figure}
 
@@ -103,11 +101,10 @@
 看到这里你可能会疑惑, 为什么要用$\int \,\dif x$这两个符号表示积分呢？
 下面介绍另一个概念---微分.
 
-\begin{figure}[!ht]
-  \begin{center}
-    \includegraphics{simdx.pdf}
+\begin{figure}[ht]
+  \centering
+    \input{figure/simdx.tex}
     \caption{微分近似}\label{fig:simdx}
-  \end{center}
 \end{figure}
 
 由\cref{fig:simdx}, 当 $\Delta x \to 0$时,
@@ -191,10 +188,9 @@
 
 下面我们来证明$f(x)> 0,x \in [a,b]$的情形.
 
-\begin{figure}[!htbp]
-  \begin{center}
-    \includegraphics{curve}
-  \end{center}
+\begin{figure}[htbp]
+  \centering
+    \input{figure/curve.tex}
   \caption{a到b的矩形逼近}\label{fig:absim}
 \end{figure}
 
@@ -323,20 +319,19 @@ f\left[\varphi (t)\right] \cdot \varphi '(t) \dif t$的形式,
   \frac{x^{2}}{h^{2} }\cdot S \cdot \dif x = \dif V
 .\]
 
-\begin{figure}[!htbp]
-  \begin{center}
+\begin{figure}[htbp]
+  \centering
     \begin{subfigure}{0.45\textwidth}
       \centering
-      \includegraphics{circular_cone}
+      \input{figure/circular_cone.tex}
       \caption{$M$点截面}\label{fig:circular_cone}
     \end{subfigure}
     \begin{subfigure}{0.45\textwidth}
       \centering
-      \includegraphics{circular_sim}
+      \input{figure/circular_sim.tex}
       \caption{用小圆柱逼近体积}\label{fig:circular_sim}
     \end{subfigure}
     \caption{圆锥示意图}
-  \end{center}
 \end{figure}
 
 如\cref{fig:circular_sim}, 我们可以用无数个小圆柱的体积去逼近圆锥的体积, 当每个圆柱的高足够小, 体积就足够精确.
@@ -353,9 +348,8 @@ f\left[\varphi (t)\right] \cdot \varphi '(t) \dif t$的形式,
 若$\vec{F} $为变力, 我们就需要找到$\vec{F} $与$\vec{x} $的函数关系, 便可用积分解决变力做功问题.
 
 \begin{figure}
-  \begin{center}
-    \includegraphics{planet}
-  \end{center}
+  \centering
+    \input{figure/planet.tex}
   \caption{质量分别为$M,m$的星体}\label{fig:planet}
 \end{figure}
 
@@ -370,10 +364,9 @@ f\left[\varphi (t)\right] \cdot \varphi '(t) \dif t$的形式,
     F = \frac{GMm}{x^2}
   .\]
 
-  \begin{figure}[!ht]
-    \begin{center}
-      \includegraphics{gravity}
-    \end{center}
+  \begin{figure}[ht]
+    \centering
+      \input{figure/gravity.tex}
     \caption{$F$-$x$图像}\label{fig:Fx}
   \end{figure}
 
@@ -382,6 +375,14 @@ f\left[\varphi (t)\right] \cdot \varphi '(t) \dif t$的形式,
     W_{Hh} & = \int _{h} ^{H} \frac{GMm}{x^2} \dif x    \\
     & = GMm \left(\frac{1}{h}-\frac{1}{H}\right)
   \end{align*}
+
+  \paragraph{引力势能}
+  实际上，任意保守场都具有一个势能函数，
+  我们将无穷远处的引力势能视为$0$，
+  则某点的重力势能等于物体从无穷远点运动到该点时，引力所做的功。即
+  \[
+    E_{\mathrm{p}} = \int_r^\infty \frac {GMm} {x^2} \dif x=\frac {GMm}r
+  .\]
 
   对于两点电荷之间的电场力同理.
 

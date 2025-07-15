@@ -5,7 +5,8 @@
 \usepackage{ctex}
 \usetikzlibrary{matrix, calc, positioning}
 \begin{document}
-\newcommand*{\N}{6}
+\providecommand*{\N}{6}
+\renewcommand*{\N}{6}
 \begin{tikzpicture}[scale=1.2,declare function={f(\x)=((0.12)*(\x)^(3)-0.9*(\x)^(2)+2.2*\x+0.8;},
 		lnode/.style={fill=white,font=\normalsize,inner sep=0pt,text height=1.5em}]
 	\pgfmathtruncatemacro{\M}{\N/4}

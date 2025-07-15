@@ -10,7 +10,8 @@
 \begin{document}
 \begin{tikzpicture}[declare function={f(\x)=(\x)^(2);},
 		lnode/.style={fill=white,font=\small,inner sep=0pt}]
-	\newcommand*{\N}{8}
+	\providecommand*{\N}{6}
+	\renewcommand*{\N}{6}
 	\pgfmathtruncatemacro{\M}{\N/4}
 	\coordinate (start) at (0,{f(0)});
 	\foreach \X [remember=\X as \LastX (initially 0)] in {1,...,\N}

@@ -1,6 +1,7 @@
 \NeedsTeXFormat{LaTeX2e}
-\RequirePackage{expl3}
-\ProvidesExplClass{mathrep} {2025-05-25} {v0.1.0} {Math Report Class for CSMC}
+\ExplSyntaxOn
+
+\ProvidesExplClass{mathrep} {2025-05-25} {v0.1.0} { Math~Report~Class~for~CSMC }
 
 \RequirePackage { filehook }
 \AtEndOfPackageFile* { fontspec }
@@ -14,7 +15,9 @@
   }
 }
 
-\LoadClassWithOptions{ctexbook}
+\RequirePackage[l2tabu, orthodox]{nag}
+\LoadClass { book }
+\RequirePackage{ ctex }
 
 % \RequirePackage[
 %   a4paper,
@@ -25,34 +28,52 @@
 %   headheight=15mm,
 %   headsep=3mm,
 %   footskip=20mm,
-% ]{geometry}
+% ] { geometry }
 
-\RequirePackage{fontspec}
-\setmainfont{NewCM10-Book}
-\setsansfont{NewCMSans10-Book}
-\setmonofont{NewCMMono10-Book}
+\RequirePackage { standalone }
 
-\RequirePackage{graphicx}
-\RequirePackage{amsmath,amssymb}
-\RequirePackage{subcaption}
-\RequirePackage{wrapfig2}
-\RequirePackage{bm}
-\RequirePackage{amsthm}
+\RequirePackage { graphicx }
+\RequirePackage { wrapfig2 }
+\RequirePackage { amsmath, amssymb }
 
+\RequirePackage { fontspec }
+\RequirePackage[default] { fontsetup }
+% \setmainfont{STIXTwoText}[
+%  Extension = .otf ,
+%  UprightFont = *-Regular ,
+%  BoldFont = *-Bold ,
+%  ItalicFont = *-Italic ,
+%  BoldItalicFont = *-BoldItalic ,
+% ]
+%\RequirePackage { mathptmx }
+
+\ExplSyntaxOff
+\setCJKmainfont[BoldFont=Source Han Serif SC SemiBold]{Source Han Serif SC}
+\setCJKsansfont[BoldFont=Source Han Sans SC Medium]{Source Han Sans SC Normal}
+\setCJKmonofont{Source Han Sans SC Normal}
+\ExplSyntaxOn
+
+\RequirePackage { unicode-math }
+% \setmathfont[math-style=TeX,bold-style=TeX,vargreek-shape=TeX]{STIXTwoMath-Regular.otf}
+
+
+\RequirePackage { microtype }
+\RequirePackage { subcaption }
+\RequirePackage { emptypage }
+
+\RequirePackage { amsthm }
 \theoremstyle{definition}
 \newtheorem{note}{编者补充笔记}[section]
 \newtheorem{definition}{定义}[section]
 \newtheorem{example}{例}[section]
 \newtheorem{theorem}{定理}[section]
 
-\RequirePackage{lmodern}
-% \RequirePackage{times}
-\RequirePackage{microtype}
-\RequirePackage{siunitx}
-\RequirePackage{booktabs}
-\RequirePackage{xcolor}
+\RequirePackage{ siunitx }
+\RequirePackage{ booktabs }
 
-\RequirePackage{hyperref}
+\RequirePackage{ xcolor }
+
+\RequirePackage{ hyperref }
 \hypersetup{
   hidelinks,
   colorlinks = false
@@ -80,15 +101,47 @@
 \crefname{theorem}{定理}{定理}
 \crefname{example}{例}{例}
 
+% 解决Expl3中\pkg{tcolorbox}和\pkg{tikz}附加库无法加载的
+% 补丁(需要\pkg{etoolbox}宏包支持)
+%
+% \url{https://tex.stackexchange.com/questions/57424/using-of-usetikzlibrary-in-an-expl3-package-fails}
+%
 \ExplSyntaxOff
+% \patchcmd
+% {\tcb@input@library@in}
+% {%
+%   \input\tcbpkgprefix#1\relax%
+% }
+% {%
+%   \@pushfilename
+%   \input\tcbpkgprefix#1\relax%
+%   \@popfilename
+% }
+% {}{}
+%
+% \patchcmd
+% {\pgfutil@InputIfFileExists}
+% {\input #1}
+% {%
+%   \@pushfilename
+%   \xdef\@currname{#1}%
+%   \input #1 %
+%   \@popfilename
+% }
+% {}{}
 
 \RequirePackage{tikz}
 \RequirePackage{tikz-3dplot}
 
 \usetikzlibrary{patterns}
 \usetikzlibrary{positioning} % for relative positions
+\usetikzlibrary{arrows.meta}
 \usetikzlibrary{matrix}
 \usetikzlibrary{3d,calc}
+\RequirePackage{pgfplots}
+\pgfplotsset{compat=1.18}
+
+\ExplSyntaxOn
 
 \counterwithin{figure}{section}
 \counterwithin{table}{section}
@@ -99,7 +152,9 @@
   \ensuremath{\left\lvert #1 \right\rvert}
 }
 
-\ExplSyntaxOn
+\RequirePackage[toc, title, page, header]{appendix}
+\renewcommand{\appendixpagename}{\appendixname}
+\renewcommand{\appendixtocname}{\appendixname}
 
 \int_new:N \l__mathrep_symbols_vec_input_count_int
 
@@ -114,7 +169,7 @@
   \__mathrep_symbols_vec_detect_number_of_input_str:n {#1}
   % 只有 1 个的：加粗，多于两个的加箭头
   \int_compare:nNnTF { \l__mathrep_symbols_vec_input_count_int } = {1}
-  { \bm {#1} }
+  { \symbf {#1} }
   { \overrightarrow {#1} }
 }
 \cs_new:Npn \__mathrep_symbols_vec_detect_number_of_input_str:n #1

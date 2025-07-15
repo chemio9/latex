@@ -1,4 +1,9 @@
-\documentclass[UTF8]{mathrep}
+\documentclass{mathrep}
+
+\usepackage{darkmode}
+\enabledarkmode
+
+\usepackage{layout}
 
 \title{Compilation}
 \date{\today}
@@ -7,17 +12,23 @@
 \begin{document}
 
 \frontmatter
-
 \maketitle
+
+% \chapter*{Preface}
+% \addcontentsline{toc}{chapter}{\protect\numberline{}Preface}
+
 \tableofcontents
 
 \mainmatter
 
 \include{./infinity}
 \include{./calculus}
+\include{./def_ecap}
 
-\appendix
+\begin{appendices}
 \listoffigures
-
 \listoftables
+\end{appendices}
+\backmatter
+\layout
 \end{document}
