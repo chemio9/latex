@@ -1,17 +1,11 @@
-\documentclass{ctexart}
-\usepackage{cleveref}
-
-% 修改引用文字
-\crefname{enumi}{项目}{项目}
-\Crefname{enumi}{项目}{项目}
-
+\documentclass{standalone}
+\usepackage{chemfig}
+\usepackage{darkmode}
+\enabledarkmode
 \begin{document}
+\chemfig{Cl-[:30]*6(-=-(-*6(-(*6(=-=-=))--(-N(-[2]H)(-[:-30]))---))=-(-Cl)=)}
 
-\begin{enumerate}
-	\item \label{item.1} 这是第一个项目
-	\item \label{item.2} 这是第二个项目
-\end{enumerate}
+\\[2ex]
 
-\Cref{item.1} 和 \cref{item.2} 是示例项目。
-
+\chemfig{HO-*6(-=-(-C(-[2]*6(-=-(-OH)=-=))(-[6]*6(-=-=-(-C(-[2]O?)=[0]O)=))(-[0]?))=-=)}
 \end{document}
