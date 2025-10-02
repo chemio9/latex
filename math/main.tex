@@ -1,13 +1,19 @@
 \documentclass{mathrep}
 
-\usepackage{darkmode}
-\enabledarkmode
+\newcommand{\xelatexemojipath}[1]{./apple-emoji/png/160/emoji_u#1.png}
+\usepackage{xelatexemoji}
+% \usepackage{darkmode}
+% \enabledarkmode
 
 \usepackage{layout}
 
 \title{Compilation}
 \date{\today}
 \author{雅思数论}
+
+% \includeonly{
+%   ./chapter/collision_and_pi
+% }
 
 \begin{document}
 
@@ -20,14 +26,15 @@
 \tableofcontents
 
 \mainmatter
-
-\include{./infinity}
-\include{./calculus}
-\include{./def_ecap}
+\include{./chapter/infinity}
+\include{./chapter/calculus}
+\include{./chapter/def_ecap}
+\include{./chapter/e_origin}
+\include{./chapter/collision_and_pi}
 
 \begin{appendices}
-\listoffigures
-\listoftables
+  \listoffigures
+  \listoftables
 \end{appendices}
 \backmatter
 \layout

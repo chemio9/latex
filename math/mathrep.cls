@@ -56,7 +56,6 @@
 \RequirePackage { unicode-math }
 % \setmathfont[math-style=TeX,bold-style=TeX,vargreek-shape=TeX]{STIXTwoMath-Regular.otf}
 
-
 \RequirePackage { microtype }
 \RequirePackage { subcaption }
 \RequirePackage { emptypage }
@@ -147,6 +146,7 @@
 \counterwithin{table}{section}
 % \newcommand{\env}[2]{\begin{#1}#2\end{#1}}
 
+\newcommand*{\upe}{\ensuremath{\mathrm{e}}}
 \newcommand*{\dif}{\mathop{}\!\mathrm{d}}
 \newcommand\abs[1]{
   \ensuremath{\left\lvert #1 \right\rvert}
