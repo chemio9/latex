@@ -1,0 +1,18 @@
+\documentclass[border=3pt]{standalone}
+\usepackage{tikz}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{ctex}
+\usetikzlibrary{matrix, calc, positioning}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
+
+\begin{document}
+\begin{tikzpicture}
+  \draw[->](-2.5,0)--(2.5,0)node[below]{$x = v_{1} $};
+  \draw[->](0,-2.5)--(0,2.5)node[right]{$y = v_{2} $};
+  \node[below left]at(0,0){$O$};
+  \draw[domain=0:360,samples=1000, smooth, thick, blue!70!black]
+  plot({sqrt(2)*cos(\x)},{2*sin(\x)});
+\end{tikzpicture}
+\end{document}
